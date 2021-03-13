@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 namespace Java {
 	using j_char = uint16_t;

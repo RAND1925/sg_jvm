@@ -9,4 +9,3 @@ class ClassPath {
 	Entry userClassPath;
 
 };
-

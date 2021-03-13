@@ -1,38 +1,50 @@
+
 #include "Cmd.h"
 
-const option Cmd::long_options[]{
-      { L"help", no_argument, nullptr, '?'},
-      { L"version", no_argument, nullptr, 'v'},
-      { L"cp", required_argument, nullptr, 'c'},
-      { L"classpath", required_argument, nullptr, 'c'},
-      { L"jar", required_argument, nullptr, 'j'},
-      { L"Xjre", required_argument, nullptr, 'j'},
-      {0, 0, 0, 0}
-};
+#include "boost/program_options.hpp"
+boost::program_options::options_description Cmd::dash_options("java-like");
+boost::program_options::options_description Cmd::long_options("unix-like");
+boost::program_options::options_description Cmd::hidden_options("*");
+boost::program_options::options_description Cmd::options("all");
+boost::program_options::positional_options_description Cmd::p;
 
-Cmd Cmd::parse(int argc, wchar_t** argv) {
+Cmd Cmd::parse(int argc, TCHAR** argv) {
 
-    int option_index = 0;
-    int c = 0;
     Cmd cmd;
-    while (true) {
+    namespace po = boost::program_options;
+   
+    po::variables_map vm;
+    try {
+        auto parsed = po::basic_command_line_parser(argc, argv)
+            .options(options)
+            .style(po::command_line_style::unix_style | po::command_line_style::allow_long_disguise)
+            .positional(p)
+            .allow_unregistered()
+            .run();
 
-        c = getopt_long_only(argc, argv, L"?", long_options, &option_index);
-        switch (c) {
-        case -1:
-            return cmd;
-        case 'v':
-            cmd.versionFlag = true;
-            break;
-        case ':':
-        case '?':
-            cmd.helpFlag = true;
-            break;
-        case 'c':
-            cmd.classpath = optarg;
-            break;;
-        case 'j':
-            cmd.XjreOption = optarg;
-        }
+        po::store(parsed, vm);
+
+        po::notify(vm);
+
+        cmd.helpFlag = vm.count("help");
+        cmd.versionFlag = vm.count("version");
+
+        return cmd;
+    } catch (...) {
+        return cmd;
     }
+
+    
+}
+
+inline Cmd::Cmd() {
+    namespace po = boost::program_options;
+
+    dash_options.add_options()
+        ("help,?", R"(get help)")
+        ("version,v", R"(0.0.1)")
+        ("Xre", "xre")
+        ("cp", po::wvalue(&classpath), "classpath");
+    options.add(dash_options);
+    p.add("class", -1);
 }

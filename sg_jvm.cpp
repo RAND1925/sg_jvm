@@ -1,18 +1,22 @@
 ﻿// sg_jvm.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-
 #include <iostream>
+#include <string>
+#include "windows.h"
 #include "Cmd.h"
 
-int wmain(int argc, wchar_t**argv) {
+int wmain(int argc, TCHAR** argv) {
     Cmd cmd = Cmd::parse(argc, argv);
+
     if (cmd.helpFlag) {
-        std::wcout << "help" << std::endl; 
+        std::cout << cmd.dash_options << std::endl; 
     } else if (cmd.versionFlag) {
-        std::wcout << "version 0.0.1" << std::endl;
+        std::cout << "version 0.0.1" << std::endl;
     } else {
-        std::wcout << cmd.classpath << std::endl;
+        std::cout << "ok";
         //start jvm
     }
+    
+    return 0;
 }

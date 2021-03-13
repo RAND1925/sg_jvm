@@ -3,19 +3,27 @@
 #include <string>
 #include <vector>
 
+#include "util.h"
+
 #include "boost/program_options.hpp"
 
 struct Cmd {
+
 	bool helpFlag = false;
 	bool versionFlag = false;
-
-    std::wstring classpath;
-    std::wstring jrePath;
+    tstring classpath;
+    tstring jrePath;
     std::vector<std::wstring> args;
+    static boost::program_options::options_description dash_options;
+    static boost::program_options::options_description long_options;
+    static boost::program_options::options_description hidden_options;
+    static boost::program_options::options_description options;
 
-    const static option long_options[];
+    static boost::program_options::positional_options_description p;
 
+    static Cmd parse(int argc, TCHAR** argv);
 
-    static Cmd parse(int argc, wchar_t** argv);
+private:
+    Cmd();
 };
 
