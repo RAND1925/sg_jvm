@@ -43,8 +43,8 @@ inline Cmd::Cmd() {
     dash_options.add_options()
         ("help,?", R"(get help)")
         ("version,v", R"(0.0.1)")
-        ("Xre", "xre")
-        ("cp", po::wvalue(&classpath), "classpath");
+        ("Xjre", po::wvalue(&XjreOption), "xre")
+        ("cp", po::wvalue(&classpathOption), "classpath");
     options.add(dash_options);
     p.add("class", -1);
 }

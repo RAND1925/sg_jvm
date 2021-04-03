@@ -4,4 +4,7 @@
 
 #include "windows.h"
 
-using tstring = std::basic_string<TCHAR>;
+
+inline constexpr unsigned char operator "" _b(unsigned long long arg) noexcept {
+    return static_cast<unsigned char>(arg);
+}

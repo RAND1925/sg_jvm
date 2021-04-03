@@ -5,6 +5,8 @@
 #include <string>
 #include "windows.h"
 #include "Cmd.h"
+#include "Classpath.h"
+#include "ClassFile.h"
 
 int wmain(int argc, TCHAR** argv) {
     Cmd cmd = Cmd::parse(argc, argv);
@@ -15,7 +17,12 @@ int wmain(int argc, TCHAR** argv) {
         std::cout << "version 0.0.1" << std::endl;
     } else {
         std::cout << "ok";
-        //start jvm
+        // start jvm
+        Classpath cp{cmd};
+        auto absolute_path= cp.get_absolute_path(L"Object");
+        
+        ClassFile class_file;
+        class_file.read(absolute_path);
     }
     
     return 0;

@@ -21,6 +21,21 @@
     <ClCompile Include="Cmd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Entry.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ContantPool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassPath.h">
@@ -35,5 +50,25 @@
     <ClInclude Include="util.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Entry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ContantPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rt\java\lang\Object.class">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include=".gitignore">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
