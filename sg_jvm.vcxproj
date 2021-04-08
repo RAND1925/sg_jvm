@@ -163,21 +163,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttributeInfo.cpp" />
+    <ClCompile Include="Class.cpp" />
     <ClCompile Include="ClassFile.cpp" />
     <ClCompile Include="Cmd.cpp" />
+    <ClCompile Include="Concepts.cpp" />
     <ClCompile Include="ContantPool.cpp" />
     <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="FieldInfo.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="InputClassFileStream.cpp" />
+    <ClCompile Include="MethodArea.cpp" />
+    <ClCompile Include="MethodInfo.cpp" />
     <ClCompile Include="sg_jvm.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttributeInfo.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="ClassFile.h" />
     <ClInclude Include="Classpath.h" />
     <ClInclude Include="Cmd.h" />
     <ClInclude Include="ContantPool.h" />
     <ClInclude Include="Entry.h" />
+    <ClInclude Include="FieldInfo.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="InputClassFileStream.h" />
+    <ClInclude Include="MethodArea.h" />
+    <ClInclude Include="MethodInfo.h" />
+    <ClInclude Include="String.h" />
+    <ClInclude Include="Thread.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

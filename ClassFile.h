@@ -7,100 +7,84 @@
 
 #include "util.h"
 #include "file.h"
+#include "InputClassFileStream.h"
 #include "ContantPool.h"
-
+#include "MethodInfo.h"
+#include "FieldInfo.h"
 
 namespace fs = std::filesystem;
+namespace ClassFile {
+	class ClassFile {
+	public:
+		const static inline uint32_t MAGIC_NUMBER = 0xCAFEBABE;
 
-
-class ClassFile {
-public:
-
-	const static inline uint32_t MAGIC_NUMBER = 0xCAFEBABE;
-
-	uint32_t magic;
-	uint16_t minor_version;
-	uint16_t major_version;
-	uint16_t constant_pool_count;
-	// cp_info constant_pool
-	//ConstantPool constant_pool;
-	uint16_t access_flags;
-	uint16_t this_class;
-	uint16_t super_class;
-	uint16_t interfaces_count;
-	// interfaces
-	uint16_t fields_count;
-	// fields
-	uint16_t methods_count;
-	// methods
-	uint16_t attributes_count;
-	// attributes;
-	void read(std::istream& is) {
-		read_and_check_magic(is);
-		read_and_check_version(is);
-	}
-	std::vector<std::unique_ptr<ConstantInfo::ConstantInfo> > constant_pool;
-
-	void read(const fs::path& path) {
-		std::ifstream is{path.c_str(), std::ios::binary};
-		read_and_check_magic(is);
-		read_and_check_version(is);
-		read_constant_pool_count(is);
-		read_constant_pool(is);
+		uint32_t magic;
+		uint16_t minor_version;
+		uint16_t major_version;
+		uint16_t constant_pool_count;
+		std::vector<ConstantInfo::Constant> constant_pool;
+		uint16_t access_flags;
+		uint16_t this_class;
+		uint16_t super_class;
+		uint16_t interfaces_count;
+		std::unique_ptr<uint16_t[]> interfaces;
+		uint16_t fields_count;
+		std::unique_ptr<FieldInfo[]> fields;
+		uint16_t methods_count;
+		std::unique_ptr<MethodInfo[]> methods;
+		uint16_t attributes_count;
 		
-	}
+		void read(void) {
+			read_and_check_magic();
+			read_and_check_version();
+			read_constant_pool();
+			read_access_flags();
+			read_classes();
+			read_interfaces();
+			read_fields();
+			read_methods();
+		}
 
+		void read(const fs::path& path);
+		ClassFile(const fs::path& path): is(path) {}
 	
-private:
-	std::istream& read_constant_pool(std::istream& is) {
-		constant_pool.reserve(constant_pool_count);
-		constant_pool.emplace_back();
-		for (decltype(constant_pool_count) i = 1; i < constant_pool_count; ++i) {
-			constant_pool.emplace_back(ConstantInfo::create_constant_info(is));
-			if ((constant_pool.back()->tag == ConstantInfo::CONSTANT_Long)
-				|| (constant_pool.back()->tag == ConstantInfo::CONSTANT_Double)) {
-				++i;
+	private:
+		InputClassFileStream is;
+		void read_and_check_magic();
+		void read_and_check_version();
+		void read_constant_pool();
+		void read_access_flags() {
+			is.read(access_flags);
+		}
+		void read_classes() {
+			is.read(this_class);
+			is.read(super_class);
+		}
+
+		void read_interfaces() {
+			is.read(interfaces_count);
+			interfaces = std::make_unique<uint16_t[]>(interfaces_count);
+			for (decltype(interfaces_count) i = 0; i < interfaces_count; ++i) {
+				is.read(interfaces[i]);
+			}
+		}	
+
+		void read_fields() {
+			is.read(fields_count);
+			fields = std::make_unique<FieldInfo[]>(fields_count);
+			for (decltype(fields_count) i = 0; i < fields_count; ++i) {
+				new(&(fields[i]))FieldInfo(is);
 			}
 		}
-		return is;
-	}
 
-	std::istream& read_constant_pool_count(std::istream& is) {
-		read_big_endian(is, constant_pool_count);
-		return is;
-	}
-
-	std::istream& read_and_check_magic(std::istream& is) {
-		read_big_endian(is, magic);
-		if (magic == MAGIC_NUMBER) {
-			return is;
-		} else {
-			throw std::runtime_error("Magic number check fails.");
+		void read_methods() {
+			is.read(methods_count);
+			methods = std::make_unique<MethodInfo[]>(methods_count);
+			for (decltype(methods_count) i = 0; i < methods_count; ++i) {
+				new(&(methods[i]))MethodInfo(is);
+			}
 		}
-	}
+	};
+}
 
-	std::istream& read_and_check_version(std::istream& is) {
-		read_big_endian(is, minor_version);
-		read_big_endian(is, major_version);
-
-		switch (major_version) {
-			case 45:
-				return is;
-			case 46:
-			case 47:
-			case 48:
-			case 49:
-			case 50:
-			case 51:
-			case 52:
-				if (minor_version == 0)
-				return is;
-				
-		}
-		if (major_version < 45) {
-			throw std::runtime_error("Major version is too low");
-		}
-		return is;
-	 }
-};
 

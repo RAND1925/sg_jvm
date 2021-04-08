@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\ClassFile">
+      <UniqueIdentifier>{7c6c9b4d-bc33-40c3-b3e6-ae1072966bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ClassFile">
+      <UniqueIdentifier>{20677bff-2be0-4bb1-ae6d-506862238870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Runtime">
+      <UniqueIdentifier>{98930ffb-c760-4212-9a4d-d87cb0f797fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Concepts">
+      <UniqueIdentifier>{e2e77e81-2ef2-4482-957d-cbc6a13a7325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils">
+      <UniqueIdentifier>{6319f650-03f1-4151-848b-6c0514e1f619}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sg_jvm.cpp">
@@ -27,14 +42,41 @@
     <ClCompile Include="file.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="ClassFile.cpp">
+      <Filter>源文件\ClassFile</Filter>
+    </ClCompile>
+    <ClCompile Include="InputClassFileStream.cpp">
+      <Filter>源文件\ClassFile</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodArea.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ContantPool.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\ClassFile</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>资源文件</Filter>
+    <ClCompile Include="Concepts.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +99,33 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ClassFile.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
+    <ClInclude Include="InputClassFileStream.h">
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldInfo.h">
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeInfo.h">
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodInfo.h">
+      <Filter>头文件\ClassFile</Filter>
     </ClInclude>
     <ClInclude Include="ContantPool.h">
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>头文件\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodArea.h">
+      <Filter>头文件\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>头文件\Concepts</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

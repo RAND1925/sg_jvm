@@ -21,8 +21,8 @@ int wmain(int argc, TCHAR** argv) {
         Classpath cp{cmd};
         auto absolute_path= cp.get_absolute_path(L"Object");
         
-        ClassFile class_file;
-        class_file.read(absolute_path);
+        ClassFile::ClassFile class_file(absolute_path);
+        class_file.read();
     }
     
     return 0;
