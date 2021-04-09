@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #include "Enums.h"
 #include "String.h"
@@ -6,25 +7,30 @@
 #include "ClassFile.h"
 
 namespace Runtime {
-	class MethodArea {};
+	struct ConstantPoolIndex {
+		uint16_t index;
+	};
+	class StringIndex : ConstantPoolIndex {
+
+	};
 
 	class Class;
 	class ConstantPool;
-	class ClassMember {
+	class ClassMemberInfo {
 	public:
 		AccessType access_type;
-		String name;
-		String descriptor;
+		StringIndex name;
+		StringIndex descriptor;
 		std::weak_ptr<Class> cls;
 
-		ClassMember() {}
+		ClassMemberInfo() {}
 	};
 
-	class Field : public ClassMember {
+	class Field : public ClassMemberInfo {
 
 	};
 
-	class Method : public ClassMember {
+	class Method : public ClassMemberInfo {
 	public:
 		size_t operand_stack_capacity;
 		size_t local_variable_table_capacity;
@@ -37,10 +43,12 @@ namespace Runtime {
 	class ConstantInt {
 
 	};
+
+
 	
 	class SymbolReference {
-		std::weak_ptr<ConstantPool> constant_pool;
-		String class_name;
+		StringIndex class_name;
+		StringIndex descriptor;
 		std::weak_ptr<Class> cls;
 	};
 
@@ -48,15 +56,35 @@ namespace Runtime {
 	class ConstantPool {
 		//	std::vector<std::unqiue_ptr<Constant>> constants;
 	};
+
+
+	class Attribute{};
+	class Code: Attribute{};
+	
 	class Class {
 	public:
+		AccessType access_flags;
 		std::unique_ptr<Field[]> fields;
 		std::unique_ptr<Method[]> methods;
+		//std::unique_ptr<Attribute[]> methods;
 
-		Class(ClassFile::ClassFile class_file){}
+		Class(const ClassFile::ClassFile& class_file)
+		: access_flags(AccessType(class_file.access_flags)) {
+			
+		}
 
 	};
 
 
+	template<typename T>
+	using AutoIncreasingArray = std::vector<T>;
+	class MethodArea {
+	public:
+		AutoIncreasingArray<Class> clses;
+		AutoIncreasingArray<Method> methods;
+		AutoIncreasingArray<Method> codes;
+
+
+	};
 	
 }

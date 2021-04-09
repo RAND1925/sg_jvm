@@ -9,6 +9,7 @@
 #include "file.h"
 #include "InputClassFileStream.h"
 #include "ContantPool.h"
+#include "AttributeInfo.h"
 #include "MethodInfo.h"
 #include "FieldInfo.h"
 
@@ -33,7 +34,8 @@ namespace ClassFile {
 		uint16_t methods_count;
 		std::unique_ptr<MethodInfo[]> methods;
 		uint16_t attributes_count;
-		
+		std::unique_ptr<AttributeInfo[]> attributes;
+
 		void read(void) {
 			read_and_check_magic();
 			read_and_check_version();
@@ -43,6 +45,8 @@ namespace ClassFile {
 			read_interfaces();
 			read_fields();
 			read_methods();
+			read_attributes();
+			std::cout << "read end" << std::endl;
 		}
 
 		void read(const fs::path& path);
@@ -82,6 +86,25 @@ namespace ClassFile {
 			methods = std::make_unique<MethodInfo[]>(methods_count);
 			for (decltype(methods_count) i = 0; i < methods_count; ++i) {
 				new(&(methods[i]))MethodInfo(is);
+			}
+		}
+
+		void read_attributes() {
+			is.read(attributes_count);
+			attributes = std::make_unique<AttributeInfo[]>(attributes_count);
+			for (decltype(attributes_count) i = 0; i < attributes_count; ++i) {
+				new(&(attributes[i]))AttributeInfo(is);
+			}
+		}
+
+
+
+		template<typename Size, typename T> 
+		void read_table(Size& size, std::unique_ptr<T[]>& table) {
+			is.read(size);
+			table = std::make_unique<T[]>(table);
+			for (auto& t: table) {
+				new(&(t))T(is);
 			}
 		}
 	};

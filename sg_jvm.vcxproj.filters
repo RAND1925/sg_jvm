@@ -128,6 +128,9 @@
     <ClInclude Include="String.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ClassMemberInfo.h">
+      <Filter>头文件\ClassFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="rt\java\lang\Object.class">
